@@ -6,6 +6,7 @@ import argparse
 import subprocess
 import glob
 import pathlib
+import time
 
 
 def getArgs():
@@ -92,7 +93,8 @@ def fetchAndInstall(package, version, src_dir, dst_dir, log_file):
     package_dir     = src_dir + "/" + package_version
     package_found   = False
     
-    for ext in [["xz", "J"], ["bz2", "j"], ["gz", "z"]]:
+    for ext in [["gz", "z"], ["xz", "J"], ["bz2", "j"]]:
+        time.sleep(2)
         package_file_tmp = package_version + ".orig.tar." + ext[0]
         url_tmp = "http://ftp.debian.org/debian/pool/main/" + first_letter + "/" + package + "/" + package_file_tmp
         
@@ -109,6 +111,7 @@ def fetchAndInstall(package, version, src_dir, dst_dir, log_file):
     
     print("url: "+  url)
     mkdirIfNotExists(package_dir)
+    time.sleep(2)
     runCommand("wget -O - '" + url + "' | tar xf" + decompress_option + " - -C " + package_dir)
     
     work_dir = glob.glob(package_dir + "/*")[0]
