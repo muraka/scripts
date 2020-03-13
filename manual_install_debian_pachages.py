@@ -5,6 +5,7 @@ import os
 import argparse
 import subprocess
 import glob
+import pathlib
 
 
 def getArgs():
@@ -51,9 +52,9 @@ def main():
     error = False
     package  = args.package
     version  = args.version
-    src_dir  = args.src_dir
-    dst_dir  = args.dst_dir
-    log_file = (args.log_file or "")
+    src_dir  = str(pathlib.Path(str(args.src_dir)).resolve())
+    dst_dir  = str(pathlib.Path(str(args.dst_dir)).resolve())
+    log_file = str(pathlib.Path(str(args.log_file)).resolve() or "")
     
     if not package:
         error = True
@@ -73,12 +74,14 @@ def main():
         
     if error:
         exit()
-        
+    
+    print("==== manual_install_debian_pachages.py ====")
     print("package: "  + package)
     print("version: "  + version)
     print("src dir: "  + src_dir)
     print("dst dir: "  + dst_dir)
     print("log file: " + log_file)
+    print()
     
     fetchAndInstall(package, version, src_dir, dst_dir, log_file)
     
