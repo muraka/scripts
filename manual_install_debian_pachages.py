@@ -119,7 +119,7 @@ def fetchAndInstall(package, version, src_dir, dst_dir, log_file):
     
     if log_file and ret["status"]:
         with open(log_file, "at") as f:
-            f.write(runCommandAndGetResult("env LANG=C date ")["output"].strip() + ": " + package_version + "\r")
+            f.write(runCommandAndGetResult("env LANG=C date ")["output"].strip() + ": " + package_version + "\n")
     
 
 if __name__ == '__main__':
