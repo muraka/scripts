@@ -92,7 +92,7 @@ def fetchAndInstall(package, version, src_dir, dst_dir, log_file):
     package_dir     = src_dir + "/" + package_version
     package_found   = False
     
-    for ext in [["xz", "J"], ["bz2", "j"]]:
+    for ext in [["xz", "J"], ["bz2", "j"], ["gz", "z"]]:
         package_file_tmp = package_version + ".orig.tar." + ext[0]
         url_tmp = "http://ftp.debian.org/debian/pool/main/" + first_letter + "/" + package + "/" + package_file_tmp
         
