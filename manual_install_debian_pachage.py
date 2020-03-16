@@ -118,9 +118,9 @@ def fetchAndInstall(package, version, src_dir, dst_dir, log_file):
     os.chdir(work_dir)
     
     install_cmd = "./configure --prefix=" + dst_dir + " && make && make install"
-    ret = runCommandAndGetResult(install_cmd)
+    ret = runCommandAndGetResult(install_cmd, True)
     
-    if log_file and ret["status"]:
+    if log_file and ret["status"] == "0":
         with open(log_file, "at") as f:
             f.write(runCommandAndGetResult("env LANG=C date ")["output"].strip() + ": " + package_version + "\n")
     
