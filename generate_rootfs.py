@@ -121,6 +121,9 @@ def installAll(settings, src_dir, dst_dir, log_file, tar_src, tar_dst):
             if not completed:
                 log_file_obj.close()
                 return False
+        
+        tar_cmd = "tar czf " + tar_dst + "/rootfs_" + version + ".tar.gz " + tar_src
+        runCommand(tar_cmd, True)
     
     log_file_obj.close()
     return True
