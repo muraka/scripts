@@ -43,6 +43,10 @@ def loadJson(file_full_path):
     with open(file_full_path, "r") as f:
         return json.load(f)
 
+def addWriteToAFile(file_full_path, string):
+    with open(file_full_path, "at") as f:
+        f.write(string)
+
 
 def main():
     global installer
@@ -101,31 +105,26 @@ def main():
 
 
 def installAll(settings, src_dir, dst_dir, log_file, tar_src, tar_dst):
-    log_file_obj = open(log_file, "at")
-    
     for version in settings:
-        log_file_obj.write("======== " + version + " ========\n")
+        addWriteToAFile(log_file, "======== " + version + " ========\n")
         
-        log_file_obj.write("latest:\n")
+        addWriteToAFile(log_file, "latest\n")
         print("latest")
         for package in settings[version]["latest"]:
             completed = install(package["package"], package["version"], src_dir, dst_dir, log_file)
             if not completed:
-                log_file_obj.close()
                 return False
         
-        log_file_obj.write("not latest:\n")
+        addWriteToAFile(log_file, "not latest\n")
         print("not latest")
         for package in settings[version]["not latest"]:
             completed = install(package["package"], package["version"], src_dir, dst_dir, log_file)
             if not completed:
-                log_file_obj.close()
                 return False
         
         tar_cmd = "tar czf " + tar_dst + "/rootfs_" + version + ".tar.gz " + tar_src
         runCommand(tar_cmd, True)
-    
-    log_file_obj.close()
+        
     return True
     
     
